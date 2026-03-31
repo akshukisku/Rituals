@@ -1,11 +1,9 @@
 import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import type { Swiper as SwiperType } from "swiper";
 
 import "swiper/css";
-import "swiper/css/navigation";
 
 import ProductCard from "../../components/ProductCard";
 import { weddingCards } from "../../service/json/rituals.data";
@@ -37,13 +35,10 @@ const ProductSection = () => {
           <FiChevronRight size={22} />
         </button>
 
-        {/* ✅ overflow-hidden prevents slides from wrapping into columns */}
         <div className="w-full overflow-hidden">
           <Swiper
-            modules={[Navigation]}
-            onSwiper={(swiper) => (swiperRef.current = swiper)}
+            onSwiper={(swiper) => { swiperRef.current = swiper; }}
             spaceBetween={24}
-            slidesPerView={4}
             breakpoints={{
               0:    { slidesPerView: 1.2 },
               640:  { slidesPerView: 2 },
@@ -54,7 +49,6 @@ const ProductSection = () => {
             style={{ width: "100%" }}
           >
             {weddingCards.map((card) => (
-              // ✅ h-full keeps all slides the same height in a row
               <SwiperSlide key={card.id} style={{ height: "auto" }}>
                 <ProductCard data={card} />
               </SwiperSlide>
