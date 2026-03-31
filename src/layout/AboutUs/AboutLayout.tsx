@@ -25,16 +25,16 @@ const AboutLayout = () => {
 
     {/* Card 1 */}
     <div className="flex flex-col items-center justify-center bg-[#F9F6C1] rounded-xl p-6 text-center shadow-md">
-      <Package size={32} className="text-purple-900 mb-2" />
-      <h3 className="font-bold text-purple-900 text-lg">2000+</h3>
-      <p className="text-sm text-purple-900">Product Delivered</p>
+      <Package size={32} className="text-[#5a0a2a] mb-2" />
+      <h3 className="font-bold text-[#5a0a2a] text-lg">2000+</h3>
+      <p className="text-sm text-[#5a0a2a]">Product Delivered</p>
     </div>
 
     {/* Card 2 */}
     <div className="flex flex-col items-center justify-center bg-[#F9F6C1] rounded-xl p-6 text-center shadow-md">
-      <User size={32} className="text-purple-900 mb-2" />
-      <h3 className="font-bold text-purple-900 text-lg">3000+</h3>
-      <p className="text-sm text-purple-900">Customer Reviews</p>
+      <User size={32} className="text-[#5a0a2a] mb-2" />
+      <h3 className="font-bold text-[#5a0a2a] text-lg">3000+</h3>
+      <p className="text-sm text-[#5a0a2a]">Customer Reviews</p>
     </div>
 
   </div>

@@ -1,4 +1,3 @@
-// import React from 'react'
 import CategorySidebar from '../../components/CategorySidebar'
 import CategoriesSection from '../CategoriesSection'
 import GiftsSection from '../GiftsSection'
@@ -9,16 +8,13 @@ const Shop = () => {
     <div className="container flex flex-col lg:flex-row gap-5 p-2">
 
       {/* LEFT SIDEBAR */}
-      <div className="
-        w-full 
-        lg:w-[260px] 
-        xl:w-[300px]
-      ">
+      <div className="w-full lg:w-[260px] xl:w-[400px] flex-shrink-0">
         <CategorySidebar />
       </div>
 
       {/* RIGHT CONTENT */}
-      <div className="flex-1 flex flex-col gap-10">
+      {/* ✅ min-w-0 prevents flex child from overflowing its container */}
+      <div className="flex-1 min-w-0 flex flex-col gap-10">
 
         <GiftsSection />
 
