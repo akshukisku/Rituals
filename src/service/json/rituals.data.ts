@@ -1,0 +1,389 @@
+import type { CategoryCard, ComboCard, Gifts, PriceRange, ProductCard, ReturnCard, TeamMember } from "../../type/interface/rituals.interface";
+
+export const Categoriescards: CategoryCard[] = [
+  {
+    id: 1,
+    title: "Wedding Cards",
+    image: "src/assets/categories_card/categories_1.png",
+  },
+  {
+    id: 2,
+    title: "Digital Invites Templates",
+    image: "src/assets/categories_card/categories_2.png",
+  },
+  {
+    id: 3,
+    title: "Personalized Stationery",
+    image: "src/assets/categories_card/categories_3.png",
+  },
+  {
+    id: 4,
+    title: "Return Gifts & Hampers",
+    image: "src/assets/categories_card/categories_4.png",
+  },
+  {
+    id: 5,
+    title: "Wedding Accessories",
+    image: "src/assets/categories_card/categories_5.png",
+  },
+  {
+    id: 6,
+    title: "Favour Bags",
+    image: "src/assets/categories_card/categories_6.png",
+  },
+];
+
+export const priceRanges: PriceRange[] = [
+  { id: 1, min: 100, max: 500 },
+  { id: 2, min: 500, max: 1000 },
+  { id: 3, min: 1000, max: 1500 },
+  { id: 4, min: 1500, max: 2000 },
+  { id: 5, min: 2000, max: 2500 },
+  { id: 6, min: 2500, max: 3000 },
+];
+
+export const teamMembers:TeamMember[] = [
+  {
+    id: 1,
+    name: "Samantha Edwards",
+    image: "src/assets/team_images/team_3.jpg",
+    socials: {
+      fb: "#",
+      tw: "#",
+      linkedin: "#",
+      ig: "#",
+    },
+  },
+  {
+    id: 2,
+    name: "Helen Miller",
+    image: "src/assets/team_images/team_2.jpeg",
+    socials: {
+      fb: "#",
+      tw: "#",
+      linkedin: "#",
+      ig: "#",
+    },
+  },
+  {
+    id: 3,
+    name: "Adriana Grande",
+    image: "src/assets/team_images/team_1.jpg",
+    socials: {
+      fb: "#",
+      tw: "#",
+      linkedin: "#",
+      ig: "#",
+    },
+  },
+  {
+    id: 4,
+    name: "Selena Macnageds",
+    image: "src/assets/team_images/team_4.jpg",
+    socials: {
+      fb: "#",
+      tw: "#",
+      linkedin: "#",
+      ig: "#",
+    },
+  },
+];
+
+export const gifts:Gifts[] = [
+  {
+    id: 1,
+    name: "Handcrafted Decorative Box",
+    image: "src/assets/gift_images/Gift_1.jpg",
+    price: 80,
+    oldPrice: 94,
+    reviews: 4,
+    rating: 5,
+    discount: 25
+  },
+  {
+    id: 2,
+    name: "Madhubani Art Gift Box",
+    image: "src/assets/gift_images/Gift_2.jpg",
+    price: 65,
+    oldPrice: 85,
+    reviews: 6,
+    rating: 4,
+    discount: 20
+  },
+  {
+    id: 3,
+    name: "Traditional Wooden Trinket Box",
+    image: "src/assets/gift_images/Gift_3.jpg",
+    price: 120,
+    oldPrice: 150,
+    reviews: 8,
+    rating: 5,
+    discount: 30
+  },
+  {
+    id: 4,
+    name: "Hand Painted Storage Box",
+    image: "src/assets/gift_images/Gift_4.jpg",
+    price: 70,
+    oldPrice: 95,
+    reviews: 3,
+    rating: 4,
+    discount: 18
+  },
+  {
+    id: 5,
+    name: "Vintage Jewelry Organizer",
+    image: "src/assets/gift_images/Gift_5.jpg",
+    price: 95,
+    oldPrice: 120,
+    reviews: 7,
+    rating: 5,
+    discount: 22
+  },
+  {
+    id: 6,
+    name: "Ethnic Gift Storage Box",
+    image: "src/assets/gift_images/Gift_6.jpg",
+    price: 60,
+    oldPrice: 80,
+    reviews: 5,
+    rating: 4,
+    discount: 25
+  },
+  {
+    id: 7,
+    name: "Decorative Craft Box",
+    image: "src/assets/gift_images/Gift_7.jpg",
+    price: 75,
+    oldPrice: 90,
+    reviews: 4,
+    rating: 4,
+    discount: 15
+  },
+  {
+    id: 8,
+    name: "Artisan Handmade Box",
+    image: "src/assets/gift_images/Gift_8.jpg",
+    price: 110,
+    oldPrice: 135,
+    reviews: 9,
+    rating: 5,
+    discount: 20
+  },
+  {
+    id: 9,
+    name: "Traditional Art Storage Box",
+    image: "src/assets/gift_images/Gift_9.jpg",
+    price: 85,
+    oldPrice: 105,
+    reviews: 6,
+    rating: 4,
+    discount: 19
+  },
+  {
+    id: 10,
+    name: "Decorative Keepsake Box",
+    image: "src/assets/gift_images/Gift_10.jpg",
+    price: 130,
+    oldPrice: 160,
+    reviews: 10,
+    rating: 5,
+    discount: 28
+  }
+];
+
+
+
+export const anotherCategories: CategoryCard[] = [
+  {
+    id: 1,
+    title: "Return Gifts Combos",
+    image: "src/assets/gear_items/gifts_1.jpg",
+  },
+  {
+    id: 2,
+    title: "Key Hangers ",
+    image: "src/assets/gear_items/gifts_2.jpg",
+  },
+  {
+    id: 3,
+    title: "Divine Figures",
+    image: "src/assets/gear_items/gifts_3.jpg",
+  },
+  {
+    id: 4,
+    title: "Return Gifts for Kids",
+    image: "src/assets/gear_items/gifts_4.jpg",
+  }
+];
+
+export const weddingCards:ProductCard[] = [
+  {
+    id: 1,
+    name: "Floral Wedding Invitation",
+    image: "src/assets/Selling/card1.jpg",
+    price: 20,
+    oldPrice: 25,
+    reviews: 4,
+    rating: 4
+  },
+  {
+    id: 2,
+    name: "Classic Elegant Invitation",
+    image: "src/assets/Selling/card2.jpg",
+    price: 20,
+    oldPrice: 25,
+    reviews: 4,
+    rating: 4
+  },
+  {
+    id: 3,
+    name: "Vintage Floral Invitation",
+    image: "src/assets/Selling/card3.jpg",
+    price: 20,
+    oldPrice: 25,
+    reviews: 4,
+    rating: 4
+  },
+  {
+    id: 4,
+    name: "Royal Green Wedding Card",
+    image: "src/assets/Selling/card4.jpg",
+    price: 20,
+    oldPrice: 25,
+    reviews: 4,
+    rating: 4
+  },
+  {
+    id: 5,
+    name: "Traditional Gold Invitation",
+    image: "src/assets/Selling/card5.jpg",
+    price: 20,
+    oldPrice: 25,
+    reviews: 4,
+    rating: 4
+  },
+    {
+    id: 5,
+    name: "Traditional Gold Invitation",
+    image: "src/assets/Selling/card5.jpg",
+    price: 20,
+    oldPrice: 25,
+    reviews: 4,
+    rating: 4
+  },
+    {
+    id: 5,
+    name: "Traditional Gold Invitation",
+    image: "src/assets/Selling/card5.jpg",
+    price: 20,
+    oldPrice: 25,
+    reviews: 4,
+    rating: 4
+  },
+    {
+    id: 5,
+    name: "Traditional Gold Invitation",
+    image: "src/assets/Selling/card5.jpg",
+    price: 20,
+    oldPrice: 25,
+    reviews: 4,
+    rating: 4
+  }
+
+];
+export const returnCards: ReturnCard[] = [
+  {
+    id: 1,
+    name: "Kids Printed Tin Jar",
+    image: "src/assets/return_card/return_1.jpg",
+    price: 20,
+    oldPrice: 25,
+    reviews: 4,
+    rating: 4,
+  },
+  {
+    id: 2,
+    name: "Floral Printed Storage Jar",
+    image: "src/assets/return_card/return_2.jpg",
+    price: 20,
+    oldPrice: 25,
+    reviews: 4,
+    rating: 4,
+  },
+  {
+    id: 3,
+    name: "Vintage Decorative Tin Box",
+    image: "src/assets/return_card/return_3.jpg",
+    price: 20,
+    oldPrice: 25,
+    reviews: 4,
+    rating: 4,
+  },
+  {
+    id: 4,
+    name: "Royal Pattern Gift Jar",
+    image: "src/assets/return_card/return_4.jpg",
+    price: 20,
+    oldPrice: 25,
+    reviews: 4,
+    rating: 4,
+  },
+  {
+    id: 5,
+    name: "Classic Floral Return Gift Box",
+    image: "src/assets/return_card/return_5.jpg",
+    price: 20,
+    oldPrice: 25,
+    reviews: 4,
+    rating: 4,
+  },
+];
+
+export const comboCards:ComboCard[] = [
+  {
+    id: 1,
+    name: "Festive Gift Hamper Combo",
+    image: "src/assets/combo_card/combo_1.jpg",
+    price: 35,
+    oldPrice: 45,
+    reviews: 6,
+    rating: 4,
+  },
+  {
+    id: 2,
+    name: "Premium Wedding Gift Combo",
+    image: "src/assets/combo_card/combo_2.jpg",
+    price: 40,
+    oldPrice: 52,
+    reviews: 8,
+    rating: 5,
+  },
+  {
+    id: 3,
+    name: "Decorative Tin Jar Gift Set",
+    image: "src/assets/combo_card/combo_3.jpg",
+    price: 30,
+    oldPrice: 40,
+    reviews: 5,
+    rating: 4,
+  },
+  {
+    id: 4,
+    name: "Luxury Return Gift Combo",
+    image: "src/assets/combo_card/combo_4.jpg",
+    price: 38,
+    oldPrice: 50,
+    reviews: 7,
+    rating: 4,
+  },
+  {
+    id: 5,
+    name: "Traditional Wedding Gift Set",
+    image: "src/assets/combo_card/combo_5.jpg",
+    price: 42,
+    oldPrice: 55,
+    reviews: 9,
+    rating: 5,
+  },
+];
