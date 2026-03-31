@@ -262,6 +262,7 @@ export const weddingCards: ProductCard[] = [
     reviews: 4,
     rating: 4,
   },
+  
 ];
 
 export const returnCards: ReturnCard[] = [
