@@ -38,7 +38,7 @@ const navigate = useNavigate();
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
 
         {/* Logo */}
-        <img src="./Rituals.png" alt="logo" className="h-10" />
+       <a href=""> <img src="./Rituals.png" alt="logo" className="h-10" /></a>
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex items-center gap-12">

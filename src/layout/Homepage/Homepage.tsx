@@ -14,7 +14,7 @@ import Banner from '../../components/Banner'
 
 const Homepage = () => {
   return (
-  <div className='container'>
+  <div className='w-full'>
   <Homehero/>
   <Categories/>
   <SectionDivide/>

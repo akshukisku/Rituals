@@ -5,30 +5,26 @@ import PriceSecrion from '../Homepage/PriceSecrion'
 
 const Shop = () => {
   return (
-    <div className="container flex flex-col lg:flex-row gap-5 p-2">
+<div className="flex h-screen overflow-hidden">
+  
+  {/* Sidebar */}
+<aside className="w-[300px] xl:w-[440px] shrink-0 bg-white p-4 sticky top-0 h-screen overflow-y-auto">
+  <CategorySidebar />
+</aside>
 
-      {/* LEFT SIDEBAR */}
-      <div className="w-full lg:w-[260px] xl:w-[400px] flex-shrink-0">
-        <CategorySidebar />
-      </div>
-
-      {/* RIGHT CONTENT */}
-      {/* ✅ min-w-0 prevents flex child from overflowing its container */}
-      <div className="flex-1 min-w-0 flex flex-col gap-10">
-
-        <GiftsSection />
-
-        <PriceSecrion />
-
-        <CategoriesSection />
-
-        <div className="gift-section">
-          <GiftsSection />
-        </div>
-
-      </div>
-
+  {/* Right Content */}
+  <main className="flex-1 overflow-y-auto p-4">
+    
+    <div className="flex flex-col gap-10">
+      <GiftsSection />
+      <PriceSecrion />
+      <CategoriesSection />
+      <GiftsSection />
     </div>
+
+  </main>
+
+</div>
   );
 };
 

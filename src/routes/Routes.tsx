@@ -5,6 +5,8 @@ import Homepage from "../layout/Homepage/Homepage";
 import AboutPage from "../layout/AboutUs/AboutPage";
 import ErrorBoundary from "../layout/ErrorBoundary";
 import Shop from "../layout/Shop/Shop";
+import SignupLayout from "../layout/SignupLayout";
+import LoginLayout from "../layout/LoginLayout";
 
 const Router = createBrowserRouter([
   {
@@ -21,20 +23,30 @@ const Router = createBrowserRouter([
         element: <AboutPage />,
       },
       {
-        path: "/shop",
+        path: "shop",
         element: <Shop/>,
       },
       {
-        path:"/blog",
+        path:"blog",
         errorElement:<ErrorBoundary/>
       },
       {
-        path:"/contact",
+        path:"contact",
         errorElement:<ErrorBoundary/>
       },
       {
-        path:"/cart",
+        path:"cart",
         element:<Cart/>
+      },
+      {
+        path:"signup",
+        errorElement:<ErrorBoundary/>,
+        element:<SignupLayout/>
+      },
+      {
+        path:"login",
+        errorElement:<ErrorBoundary/>,
+        element:<LoginLayout/>
       }
     ],
   },

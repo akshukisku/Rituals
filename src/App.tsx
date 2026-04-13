@@ -6,7 +6,6 @@ import Router from "./routes/Routes"
 const App = () => {
   return (
     <>
- 
     <RouterProvider router={Router}/>
     </>
   )

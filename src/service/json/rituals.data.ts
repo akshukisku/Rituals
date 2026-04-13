@@ -224,7 +224,7 @@ export const weddingCards: ProductCard[] = [
     price: 20,
     oldPrice: 25,
     reviews: 4,
-    rating: 4,
+    rating: 3,
   },
   {
     id: 2,
@@ -261,6 +261,24 @@ export const weddingCards: ProductCard[] = [
     oldPrice: 25,
     reviews: 4,
     rating: 4,
+  },
+    {
+    id: 1,
+    name: "Floral Wedding Invitation",
+    image: card1,
+    price: 20,
+    oldPrice: 25,
+    reviews: 4,
+    rating: 3,
+  },
+    {
+    id: 1,
+    name: "Floral Wedding Invitation",
+    image: card1,
+    price: 20,
+    oldPrice: 25,
+    reviews: 4,
+    rating: 3,
   },
   
 ];

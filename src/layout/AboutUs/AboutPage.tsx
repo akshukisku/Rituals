@@ -7,7 +7,7 @@ import TeamSection from "../TeamSection";
 
 const AboutPage = () => {
   return (
-    <div className="container">
+    <div className="w-full">
       <AboutLayout />
       <Cities />
       <FounderLayout />

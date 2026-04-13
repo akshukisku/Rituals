@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 
 const HomeWrapper = () => {
   return (
-    <div className="container">
+    <div className="w-full">
       <Header />
       <main>
         <Outlet />

@@ -8,12 +8,12 @@ import Stores from "../components/Stores"
 
 const Cart = () => {
   return (
-    <>
+    <div className="w-full">
     <CardLayout/>
     <YouMayLike/>
     <Banner />
     <Stores/>
-    </>
+    </div>
   )
 }
 
