@@ -1,7 +1,7 @@
 // import React from "react";
 import AboutLayout from "./AboutLayout";
 import Cities from "../Cities";
-import FounderLayout from "../FounderLayout";
+import FounderLayout from "./FounderLayout";
 import GetInTouch from "./GetInTouch";
 import TeamSection from "../TeamSection";
 
@@ -12,7 +12,7 @@ const AboutPage = () => {
       <Cities />
       <FounderLayout />
       <GetInTouch />
-      <TeamSection/>
+      <TeamSection />
     </div>
   );
 };

@@ -1,46 +1,56 @@
+const stats = [
+  { number: "500+", label: "Brands" },
+  { number: "40M+", label: "Customer Served" },
+  { number: "10K+", label: "Products" },
+  { number: "3200+", label: "Delivery Ongoing" },
+];
+
 const WeddingStats = () => {
   return (
-    <section className="py-16">
-      <div className="container mx-auto px-4">
+    <section className="py-10 sm:py-14 lg:py-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Heading */}
-        <h2 className="text-center text-[#570835] font-semibold text-xl md:text-2xl lg:text-3xl mb-16">
+        <h2 className="text-center text-[#570835] font-semibold 
+          text-lg sm:text-xl md:text-2xl lg:text-3xl mb-10 sm:mb-14 lg:mb-16">
           India’s largest wedding gift platform
         </h2>
 
-        {/* Desktop Layout */}
-        <div className="hidden lg:block relative max-w-6xl mx-auto h-[350px]">
+        {/* Desktop / Tablet Layout */}
+        <div className="hidden md:block relative max-w-6xl mx-auto h-[280px] lg:h-[350px]">
 
-          {/* 500+ */}
-          <div className="absolute left-0 top-0 w-44 h-44 rounded-full bg-[#F9F6C1] flex flex-col items-center justify-center text-center">
-            <span className="text-2xl font-semibold">500+</span>
-            <span className="text-sm">Brands</span>
-          </div>
+          {/* Circles */}
+          {stats.map((item, i) => {
+            const positions = [
+              "left-0 top-0",
+              "left-[25%] bottom-0",
+              "left-[50%] top-0",
+              "right-0 bottom-0",
+            ];
 
-          {/* 40M+ */}
-          <div className="absolute left-[25%] bottom-0 w-44 h-44 rounded-full bg-[#F9F6C1] flex flex-col items-center justify-center text-center">
-            <span className="text-2xl font-semibold">40M+</span>
-            <span className="text-sm">Customer Served</span>
-          </div>
+            return (
+              <div
+                key={i}
+                className={`absolute ${positions[i]} 
+                w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-44 lg:h-44
+                rounded-full bg-[#F9F6C1] flex flex-col items-center justify-center text-center shadow-sm`}
+              >
+                <span className="text-sm sm:text-base md:text-lg lg:text-2xl font-semibold">
+                  {item.number}
+                </span>
+                <span className="text-[10px] sm:text-xs md:text-sm">
+                  {item.label}
+                </span>
+              </div>
+            );
+          })}
 
-          {/* 10K+ */}
-          <div className="absolute left-[50%] top-0 w-44 h-44 rounded-full bg-[#F9F6C1] flex flex-col items-center justify-center text-center">
-            <span className="text-2xl font-semibold">10K+</span>
-            <span className="text-sm">Products</span>
-          </div>
-
-          {/* 3200+ */}
-          <div className="absolute right-0 bottom-0 w-44 h-44 rounded-full bg-[#F9F6C1] flex flex-col items-center justify-center text-center">
-            <span className="text-2xl font-semibold">3200+</span>
-            <span className="text-sm">Delivery Ongoing</span>
-          </div>
-
-          {/* CONNECTOR SVG (Single Line = BEST) */}
+          {/* Connector Line */}
           <svg
-            className="absolute top-[51%] left-0 w-full -translate-y-1/2 -z-10"
-            height="120"
+            className="absolute top-1/2 left-0 w-full -translate-y-1/2 -z-10"
             viewBox="0 0 1000 120"
             fill="none"
+            preserveAspectRatio="none"
           >
             <path
               d="M60 10 Q300 90 350 80 T450 20 T950 80"
@@ -50,24 +60,23 @@ const WeddingStats = () => {
               fill="transparent"
             />
           </svg>
-
         </div>
 
         {/* Mobile Layout */}
-        <div className="flex flex-col items-center gap-8 lg:hidden">
+        <div className="grid grid-cols-2 gap-6 sm:gap-8 md:hidden place-items-center">
 
-          {[
-            { number: "500+", label: "Brands" },
-            { number: "40M+", label: "Customer Served" },
-            { number: "10K+", label: "Products" },
-            { number: "3200+", label: "Delivery Ongoing" },
-          ].map((item, i) => (
+          {stats.map((item, i) => (
             <div
               key={i}
-              className="w-35 h-35 rounded-full bg-[#F9F6C1] flex flex-col items-center justify-center text-center"
+              className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#F9F6C1]
+              flex flex-col items-center justify-center text-center shadow-sm"
             >
-              <span className="text-lg font-semibold">{item.number}</span>
-              <span className="text-xs">{item.label}</span>
+              <span className="text-sm sm:text-base font-semibold">
+                {item.number}
+              </span>
+              <span className="text-[10px] sm:text-xs">
+                {item.label}
+              </span>
             </div>
           ))}
 

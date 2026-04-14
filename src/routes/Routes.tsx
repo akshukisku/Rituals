@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Cart from "../pages/Cart";
 import HomeWrapper from "../layout/HomeWrapper";
-import Homepage from "../layout/Homepage/Homepage";
+import Homepage from "../pages/Homepage";
 import AboutPage from "../layout/AboutUs/AboutPage";
 import ErrorBoundary from "../layout/ErrorBoundary";
 import Shop from "../layout/Shop/Shop";
@@ -16,7 +16,7 @@ const Router = createBrowserRouter([
       {
         index: true,
         element: <Homepage />,
-        errorElement:<ErrorBoundary/>
+        errorElement: <ErrorBoundary />,
       },
       {
         path: "aboutus",
@@ -24,30 +24,30 @@ const Router = createBrowserRouter([
       },
       {
         path: "shop",
-        element: <Shop/>,
+        element: <Shop />,
       },
       {
-        path:"blog",
-        errorElement:<ErrorBoundary/>
+        path: "blog",
+        errorElement: <ErrorBoundary />,
       },
       {
-        path:"contact",
-        errorElement:<ErrorBoundary/>
+        path: "contact",
+        errorElement: <ErrorBoundary />,
       },
       {
-        path:"cart",
-        element:<Cart/>
+        path: "cart",
+        element: <Cart />,
       },
       {
-        path:"signup",
-        errorElement:<ErrorBoundary/>,
-        element:<SignupLayout/>
+        path: "signup",
+        errorElement: <ErrorBoundary />,
+        element: <SignupLayout />,
       },
       {
-        path:"login",
-        errorElement:<ErrorBoundary/>,
-        element:<LoginLayout/>
-      }
+        path: "login",
+        errorElement: <ErrorBoundary />,
+        element: <LoginLayout />,
+      },
     ],
   },
 ]);

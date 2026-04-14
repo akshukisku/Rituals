@@ -4,7 +4,7 @@ import CategoriesCard from "../../components/CategoriesCard"
 import CategorySidebar from "../../components/CategorySidebar"
 import GiftsSection from "../GiftsSection"
 import { anotherCategories } from "../../service/json/rituals.data"
-import PriceSecrion from "./PriceSecrion"
+import PriceSecrion from "../Homepage/PriceSecrion"
 
 const Categories = () => {
   return (

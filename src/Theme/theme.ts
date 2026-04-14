@@ -6,8 +6,8 @@ const theme = createTheme({
     mode: "light",
 
     background: {
-      default: "#F5ECD5", // main bg
-      paper: "#ffffff",
+      // default: "#F5ECD5", // main bg
+      // paper: "#ffffff",
     },
 
     primary: {
@@ -16,7 +16,7 @@ const theme = createTheme({
     },
 
     secondary: {
-      main: "#A4B465", // soft green
+      main: "#2F2FE4", // soft green
     },
 
     warning: {
@@ -65,7 +65,6 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          background: "linear-gradient(135deg, #F5ECD5, #A4B465)",
         },
       },
     },

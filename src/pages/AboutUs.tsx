@@ -2,7 +2,7 @@
 import GetInTouch from "../layout/AboutUs/GetInTouch";
 import AboutLayout from "../layout/AboutUs/AboutLayout";
 import Cities from "../layout/Cities";
-import FounderLayout from "../layout/FounderLayout";
+import FounderLayout from "../layout/AboutUs/FounderLayout";
 import TeamSection from "../layout/TeamSection";
 
 const AboutUs = () => {
