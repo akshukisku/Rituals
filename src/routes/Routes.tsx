@@ -7,6 +7,11 @@ import ErrorBoundary from "../layout/ErrorBoundary";
 import Shop from "../layout/Shop/Shop";
 import SignupLayout from "../layout/SignupLayout";
 import LoginLayout from "../layout/LoginLayout";
+import AdminWrapper from "../layout/Admin/AdminWrapper";
+import Dashboard from "../layout/Admin/Dashboard";
+import Categories from "../layout/Admin/Categories";
+import Settings from "../layout/Admin/Settings";
+import Products from "../layout/Admin/Products";
 
 const Router = createBrowserRouter([
   {
@@ -50,6 +55,28 @@ const Router = createBrowserRouter([
       },
     ],
   },
+  {
+    path:"/admin",
+    element:<AdminWrapper/>,
+    children:[
+      {
+        path:"dashboard",
+        element:<Dashboard/>
+      },
+      {
+        path:"categories",
+        element:<Categories/>
+      },
+      {
+        path:"settings",
+        element:<Settings/>
+      },
+      {
+        path:"products",
+        element:<Products/>
+      }
+    ]
+  }
 ]);
 
 export default Router;

@@ -1,7 +1,10 @@
 
+import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 
 const Header = () => {
+
+  const navigate = useNavigate();
   return (
     <>
       <div className="w-full bg-[#e9e1d6] text-sm py-2 text-gray-700">
@@ -16,6 +19,7 @@ const Header = () => {
           <a
             href="#"
             className="mt-1 md:mt-0 md:absolute md:right-4 hover:text-purple-900 text-sm"
+            onClick={()=>navigate("/login")}
           >
             Login / Sign up
           </a>

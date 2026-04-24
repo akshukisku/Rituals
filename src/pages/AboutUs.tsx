@@ -6,6 +6,7 @@ import FounderLayout from "../layout/AboutUs/FounderLayout";
 import TeamSection from "../layout/TeamSection";
 
 const AboutUs = () => {
+  console.log("Render");
   return (
     <>
       <AboutLayout />

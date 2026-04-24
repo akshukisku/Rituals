@@ -1,6 +1,7 @@
 import CategoriesCard from "../../components/CategoriesCard";
 import { Categoriescards } from "../../service/json/rituals.data";
 const CategoriesSection = () => {
+  console.log("Categories Section Rendered")
   return (
     <section className="p-5 categories-section">
       <h2 className="text-xl font-bold text-center p-6">Featured Categories</h2>

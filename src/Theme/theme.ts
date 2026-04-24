@@ -11,7 +11,7 @@ const theme = createTheme({
     },
 
     primary: {
-      main: "#626F47", // olive green
+      main: "#f3ede4", // olive green
       contrastText: "#ffffff",
     },
 
@@ -24,7 +24,7 @@ const theme = createTheme({
     },
 
     text: {
-      primary: "#2F2F2F",
+      primary: "#5a0a2a",
       secondary: "#6B7280",
     },
   },

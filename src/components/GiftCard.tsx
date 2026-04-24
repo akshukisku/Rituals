@@ -4,7 +4,7 @@ import { FiHeart } from "react-icons/fi";
 import { FaStar } from "react-icons/fa";
 
 const GiftCard = (g: GiftCardProps) => {
-  console.log(g);
+  // console.log(g);
   return (
     <div className="w-[240px] bg-[#efe4cf] rounded-2xl overflow-hidden shadow-sm">
       {/* Product Image */}

@@ -58,8 +58,8 @@ const ProductSection = () => {
               1536: { slidesPerView: 5 },
             }}
           >
-            {weddingCards.map((card) => (
-              <SwiperSlide key={card.id} className="h-auto">
+            {weddingCards.map((card,index) => (
+              <SwiperSlide key={index} className="h-auto">
                 <ProductCard data={card} />
               </SwiperSlide>
             ))}
