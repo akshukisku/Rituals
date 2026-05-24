@@ -1,82 +1,160 @@
+import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
-import Cart from "../pages/Cart";
-import HomeWrapper from "../layout/HomeWrapper";
-import Homepage from "../pages/Homepage";
-import AboutPage from "../layout/AboutUs/AboutPage";
-import ErrorBoundary from "../layout/ErrorBoundary";
-import Shop from "../layout/Shop/Shop";
-import SignupLayout from "../layout/SignupLayout";
-import LoginLayout from "../layout/LoginLayout";
-import AdminWrapper from "../layout/Admin/AdminWrapper";
-import Dashboard from "../layout/Admin/Dashboard";
-import Categories from "../layout/Admin/Categories";
-import Settings from "../layout/Admin/Settings";
-import Products from "../layout/Admin/Products";
+import Loaders from "../components/Loaders";
+import UserProtected from "../components/UserProtected";
+import AdminProtected from "../components/AdminProtected";
+
+const Cart = lazy(() => import("../pages/Cart"));
+const HomeWrapper = lazy(() => import("../layout/HomeWrapper"));
+const Homepage = lazy(() => import("../pages/Homepage"));
+const AboutPage = lazy(() => import("../layout/AboutUs/AboutPage"));
+const Shop = lazy(() => import("../layout/Shop/Shop"));
+const SignupLayout = lazy(() => import("../layout/SignupLayout"));
+const LoginLayout = lazy(() => import("../layout/LoginLayout"));
+const AdminWrapper = lazy(() => import("../layout/Admin/AdminWrapper"));
+const Dashboard = lazy(() => import("../layout/Admin/Dashboard"));
+const Categories = lazy(() => import("../layout/Admin/Categories"));
+const Settings = lazy(() => import("../layout/Admin/Settings"));
+const Products = lazy(() => import("../layout/Admin/Products"));
+const NotFoundPage = lazy(() => import("../components/NotFoundPage"));
 
 const Router = createBrowserRouter([
   {
     path: "/",
-    element: <HomeWrapper />,
+    element: (
+      <Suspense fallback={<Loaders />}>
+        <HomeWrapper />
+      </Suspense>
+    ),
     children: [
       {
         index: true,
-        element: <Homepage />,
-        errorElement: <ErrorBoundary />,
+        element: (
+          <Suspense fallback={<Loaders />}>
+            <Homepage />
+          </Suspense>
+        ),
       },
       {
         path: "aboutus",
-        element: <AboutPage />,
+        element: (
+          <Suspense fallback={<Loaders />}>
+            <AboutPage />
+          </Suspense>
+        ),
       },
       {
         path: "shop",
-        element: <Shop />,
-      },
-      {
-        path: "blog",
-        errorElement: <ErrorBoundary />,
-      },
-      {
-        path: "contact",
-        errorElement: <ErrorBoundary />,
-      },
-      {
-        path: "cart",
-        element: <Cart />,
+        element: (
+          <Suspense fallback={<Loaders />}>
+            <Shop />
+          </Suspense>
+        ),
       },
       {
         path: "signup",
-        errorElement: <ErrorBoundary />,
-        element: <SignupLayout />,
+        element: (
+          <Suspense fallback={<Loaders />}>
+            <SignupLayout />
+          </Suspense>
+        ),
       },
       {
         path: "login",
-        errorElement: <ErrorBoundary />,
-        element: <LoginLayout />,
+        element: (
+          <Suspense fallback={<Loaders />}>
+            <LoginLayout />
+          </Suspense>
+        ),
+      },
+      {
+        path: "*",
+        element: (
+          <Suspense fallback={<Loaders />}>
+            <NotFoundPage />
+          </Suspense>
+        ),
       },
     ],
   },
+
   {
-    path:"/admin",
-    element:<AdminWrapper/>,
-    children:[
+    element: <UserProtected />,
+    children: [
       {
-        path:"dashboard",
-        element:<Dashboard/>
+        path: "/cart",
+        element: (
+          <Suspense fallback={<Loaders />}>
+            <Cart />
+          </Suspense>
+        ),
       },
+    ],
+  },
+
+  {
+    element: <AdminProtected />,
+    children: [
       {
-        path:"categories",
-        element:<Categories/>
+        path: "/admin",
+        element: (
+          <Suspense fallback={<Loaders />}>
+            <AdminWrapper />
+          </Suspense>
+        ),
+        children: [
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<Loaders />}>
+                <Dashboard />
+              </Suspense>
+            ),
+          },
+          {
+            path: "dashboard",
+            element: (
+              <Suspense fallback={<Loaders />}>
+                <Dashboard />
+              </Suspense>
+            ),
+          },
+          {
+            path: "categories",
+            element: (
+              <Suspense fallback={<Loaders />}>
+                <Categories />
+              </Suspense>
+            ),
+          },
+          {
+            path: "settings",
+            element: (
+              <Suspense fallback={<Loaders />}>
+                <Settings />
+              </Suspense>
+            ),
+          },
+          {
+            path: "products",
+            element: (
+              <Suspense fallback={<Loaders />}>
+                <Products />
+              </Suspense>
+            ),
+          },
+          {
+            path: "*",
+            element: (
+              <Suspense fallback={<Loaders />}>
+                <NotFoundPage />
+              </Suspense>
+            ),
+          },
+        ],
       },
-      {
-        path:"settings",
-        element:<Settings/>
-      },
-      {
-        path:"products",
-        element:<Products/>
-      }
-    ]
-  }
+    ],
+  },
 ]);
 
 export default Router;

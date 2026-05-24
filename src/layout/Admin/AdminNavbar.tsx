@@ -10,13 +10,17 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { LogOutIcon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { logout } from "../../service/helper/global.helper";
+// import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../hooks/useredux";
+import { logout } from "../../store/slices/auth.slice";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function AdminNavbar() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+
+  const {user}=useAppSelector((state)=>state.auth);
+  const dispatch = useAppDispatch()
 
   // ✅ STATE
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -58,6 +62,10 @@ function AdminNavbar() {
                 <Avatar alt="User" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
+            <Typography variant="h6">
+              Name:   {user?.name}
+              Role:{user?.role}
+            </Typography>
 
             {/* ✅ FIXED MENU */}
             <Menu
@@ -85,7 +93,7 @@ function AdminNavbar() {
             <LogOutIcon
               style={{ cursor: "pointer" }}
               color="red"
-              onClick={() => logout(navigate)}
+              onClick={() =>dispatch(logout())}
             />
           </Box>
         </Toolbar>

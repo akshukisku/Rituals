@@ -1,6 +1,6 @@
 import { FiHeart } from "react-icons/fi";
 import { FaStar } from "react-icons/fa";
-import type { ProductCardProps } from "../type/interface/rituals.interface";
+import type { ProductCardProps } from "../typescript/interface/rituals.interface";
 
 const ProductCard = (data:ProductCardProps) => {
   return (

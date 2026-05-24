@@ -3,7 +3,7 @@ import { FaFacebook } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaLinkedinIn } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
-import type { ProfileCardProps } from "../type/interface/rituals.interface"
+import type { ProfileCardProps } from "../typescript/interface/rituals.interface"
 
 const TeamCard = ({profile}:ProfileCardProps) => {
   return (

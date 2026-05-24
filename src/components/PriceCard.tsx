@@ -1,4 +1,4 @@
-import type { PriceCardProps } from "../type/interface/rituals.interface";
+import type { PriceCardProps } from "../typescript/interface/rituals.interface";
 
 
 const PriceCard = ({ price}: PriceCardProps) => {

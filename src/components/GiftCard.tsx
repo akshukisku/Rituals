@@ -1,5 +1,5 @@
 // import React from 'react'
-import type { GiftCardProps } from "../type/interface/rituals.interface";
+import type { GiftCardProps } from "../typescript/interface/rituals.interface";
 import { FiHeart } from "react-icons/fi";
 import { FaStar } from "react-icons/fa";
 

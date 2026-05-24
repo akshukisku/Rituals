@@ -1,7 +1,7 @@
 // import React from "react";
 import { FiHeart } from "react-icons/fi";
 import { FaStar } from "react-icons/fa";
-import type { ReturnCardProps } from "../type/interface/rituals.interface";
+import type { ReturnCardProps } from "../typescript/interface/rituals.interface";
 
 const ReturnCard = (data: ReturnCardProps) => {
   return (

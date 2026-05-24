@@ -1,6 +1,6 @@
 // import React from 'react'
 
-import type { CategoryCardProps } from "../type/interface/rituals.interface";
+import type { CategoryCardProps } from "../typescript/interface/rituals.interface";
 
 const CategoriesCard = ({ data }: CategoryCardProps) => {
   return (

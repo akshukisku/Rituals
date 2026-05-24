@@ -6,7 +6,7 @@ import type {
   ProductCard,
   ReturnCard,
   TeamMember,
-} from "../../type/interface/rituals.interface";
+} from "../../typescript/interface/rituals.interface";
 
 // Category card images
 import categories1 from "../../assets/categories_card/categories_1.png";
