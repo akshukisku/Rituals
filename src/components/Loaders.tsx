@@ -1,5 +1,6 @@
 import Lottie from "lottie-react";
 import Loading from "../animations/Loading.json";
+// import LoadingText from "../animations/loading_text.json"
 
 const Loaders = () => {
   return (

@@ -19,8 +19,8 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 function AdminNavbar() {
   // const navigate = useNavigate();
 
-  const {user}=useAppSelector((state)=>state.auth);
-  const dispatch = useAppDispatch()
+  const { user } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
   // ✅ STATE
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -40,7 +40,6 @@ function AdminNavbar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          
           {/* LOGO */}
           <Typography
             variant="h6"
@@ -56,15 +55,27 @@ function AdminNavbar() {
 
           {/* RIGHT */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
-            
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpen} sx={{ p: 0 }}>
                 <Avatar alt="User" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
-            <Typography variant="h6">
-              Name:   {user?.name}
-              Role:{user?.role}
+            <Typography
+              variant="body1"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                ml: 1,
+                fontWeight: 500,
+                color:"black"
+              }}
+            >
+              <span>Name: {user?.name}</span>
+
+              <span>|</span>
+
+              <span>Role: {user?.role}</span>
             </Typography>
 
             {/* ✅ FIXED MENU */}
@@ -84,7 +95,9 @@ function AdminNavbar() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleClose}>
-                  <Typography sx={{textAlign:"center"}} >{setting}</Typography>
+                  <Typography sx={{ textAlign: "center" }}>
+                    {setting}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -93,7 +106,7 @@ function AdminNavbar() {
             <LogOutIcon
               style={{ cursor: "pointer" }}
               color="red"
-              onClick={() =>dispatch(logout())}
+              onClick={() => dispatch(logout())}
             />
           </Box>
         </Toolbar>
