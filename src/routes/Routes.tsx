@@ -1,8 +1,8 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Loaders from "../components/Loaders";
-import UserProtected from "../components/UserProtected";
 import AdminProtected from "../components/AdminProtected";
+import Wishlist from "../pages/Wishlist";
 
 const Cart = lazy(() => import("../pages/Cart"));
 const HomeWrapper = lazy(() => import("../layout/HomeWrapper"));
@@ -11,11 +11,11 @@ const AboutPage = lazy(() => import("../layout/AboutUs/AboutPage"));
 const Shop = lazy(() => import("../layout/Shop/Shop"));
 const SignupLayout = lazy(() => import("../layout/SignupLayout"));
 const LoginLayout = lazy(() => import("../layout/LoginLayout"));
-const AdminWrapper = lazy(() => import("../layout/Admin/AdminWrapper"));
-const Dashboard = lazy(() => import("../layout/Admin/Dashboard"));
-const Categories = lazy(() => import("../layout/Admin/Categories"));
-const Settings = lazy(() => import("../layout/Admin/Settings"));
-const Products = lazy(() => import("../layout/Admin/Products"));
+const AdminWrapper = lazy(() => import("../pages/Admin/AdminWrapper"));
+const Dashboard = lazy(() => import("../pages/Admin/Dashboard"));
+const Categories = lazy(() => import("../pages/Admin/Categories"));
+const Settings = lazy(() => import("../pages/Admin/Settings"));
+const Products = lazy(() => import("../pages/Admin/Products"));
 const NotFoundPage = lazy(() => import("../components/NotFoundPage"));
 
 const Router = createBrowserRouter([
@@ -51,6 +51,17 @@ const Router = createBrowserRouter([
           </Suspense>
         ),
       },
+
+      // Cart removed from UserProtected
+      {
+        path: "cart",
+        element: (
+          <Suspense fallback={<Loaders />}>
+            <Cart />
+          </Suspense>
+        ),
+      },
+
       {
         path: "signup",
         element: (
@@ -68,24 +79,18 @@ const Router = createBrowserRouter([
         ),
       },
       {
+        path:"wishlist",
+        element:(
+          <Suspense fallback={<Loaders/>}>
+            <Wishlist/>
+          </Suspense>
+        )
+      },
+      {
         path: "*",
         element: (
           <Suspense fallback={<Loaders />}>
             <NotFoundPage />
-          </Suspense>
-        ),
-      },
-    ],
-  },
-
-  {
-    element: <UserProtected />,
-    children: [
-      {
-        path: "/cart",
-        element: (
-          <Suspense fallback={<Loaders />}>
-            <Cart />
           </Suspense>
         ),
       },

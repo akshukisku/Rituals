@@ -70,7 +70,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout:(state)=>{
-      account.deleteSession("current");
+     account.deleteSession("current");
       Cookies.remove("user");
       Cookies.remove("token");
       Cookies.remove("role");

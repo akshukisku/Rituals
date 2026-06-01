@@ -6,7 +6,7 @@ const GiftsSection = () => {
   return (
     <div className='flex flex-wrap gap-3'>
       {gifts.slice(0,8).map((gift)=>(
-        <GiftCard key={gift.id} gift={gift}/>
+        <GiftCard key={gift.id} gift={gift} />
       ))}
     </div>
   )

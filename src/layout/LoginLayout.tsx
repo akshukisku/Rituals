@@ -4,15 +4,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../service/validation/login.validation";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-
+import { Apple, Chrome } from "lucide-react";
 import { CircularProgress } from "@mui/material";
 import type { LoginPayload } from "../typescript/interface/auth.interface";
 import { useAppDispatch, useAppSelector } from "../hooks/useredux";
 import { LoginUser } from "../store/slices/auth.slice";
 
 const LoginLayout = () => {
-
-  const {isLoading,isError}=useAppSelector((state)=>state.auth)
+  const { isLoading, isError } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const {
     register,
@@ -21,35 +20,35 @@ const LoginLayout = () => {
     reset,
   } = useForm<LoginPayload>({
     resolver: yupResolver(loginSchema),
-    defaultValues:{
-      email:"",
-      password:""
-    }
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
- const onSubmit = async (data: LoginPayload) => {
-  try {
-    const response = await dispatch(LoginUser(data)).unwrap();
+  const onSubmit = async (data: LoginPayload) => {
+    try {
+      const response = await dispatch(LoginUser(data)).unwrap();
 
-    console.log("Response in Login page", response);
+      console.log("Response in Login page", response);
 
-    if (response.success) {
-      toast.success(response?.message);
+      if (response.success) {
+        toast.success(response?.message);
 
-      // RESET FORM
-      reset();
+        // RESET FORM
+        reset();
 
-      if (response?.user?.role === "admin") {
-        navigate("/admin/dashboard");
-      } else {
-        navigate("/");
+        if (response?.user?.role === "admin") {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/");
+        }
       }
+    } catch (error: any) {
+      console.log("Error", error);
+      toast.error(error?.message);
     }
-  } catch (error: any) {
-    console.log("Error", error);
-    toast.error(error?.message);
-  }
-};
+  };
 
   const navigate = useNavigate();
 
@@ -118,14 +117,17 @@ const LoginLayout = () => {
             <div className="flex flex-col sm:flex-row gap-3 mt-4">
               <button
                 type="button"
-                className="flex-1 border py-2 rounded-full text-sm"
+                className="flex-1 border py-2 rounded-full text-sm flex items-center justify-center gap-2"
               >
-                 Apple
+                <Apple size={18} />
+                Apple
               </button>
+
               <button
                 type="button"
-                className="flex-1 border py-2 rounded-full text-sm"
+                className="flex-1 border py-2 rounded-full text-sm flex items-center justify-center gap-2"
               >
+                <Chrome size={18} />
                 Google
               </button>
             </div>

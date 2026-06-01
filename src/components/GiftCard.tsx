@@ -1,10 +1,27 @@
+
 // import React from 'react'
 import type { GiftCardProps } from "../typescript/interface/rituals.interface";
 import { FiHeart } from "react-icons/fi";
 import { FaStar } from "react-icons/fa";
+import { useAppDispatch } from "../hooks/useredux";
+import { addItem } from "../store/slices/cart.slice";
+import { addWish } from "../store/slices/wishlist.slice";
+import { toast } from "sonner";
 
 const GiftCard = (g: GiftCardProps) => {
   // console.log(g);
+
+  const dispatch = useAppDispatch();
+
+  const AddCart=()=>{
+    dispatch(addItem(g.gift))
+  }
+
+  const addWishItem =()=>{
+    dispatch(addWish(g.gift))
+    
+  toast.success(`${g.gift.name} added to wishlist ❤️`);
+  }
   return (
     <div className="w-[240px] bg-[#efe4cf] rounded-2xl overflow-hidden shadow-sm">
       {/* Product Image */}
@@ -21,7 +38,7 @@ const GiftCard = (g: GiftCardProps) => {
         {/* Title + Heart */}
         <div className="flex justify-between items-center">
           <h3 className="font-semibold text-lg">{g.gift.name}</h3>
-          <FiHeart className="cursor-pointer" size={20} />
+          <FiHeart className="cursor-pointer" size={20} onClick={addWishItem} />
         </div>
         {/* Rating */}
         <div className="flex items-center gap-2 mt-2">
@@ -61,7 +78,7 @@ const GiftCard = (g: GiftCardProps) => {
         </div>
         {/* Buttons */}
         <div className="flex gap-3 mt-4">
-          <button className="flex-1 border border-[#5a0a2a] rounded-full py-2 text-sm hover:bg-[#5a0a2a] hover:text-white transition">
+          <button className="flex-1 border border-[#5a0a2a] rounded-full py-2 text-sm hover:bg-[#5a0a2a] hover:text-white transition" onClick={AddCart}>
             Add to Cart
           </button>
 

@@ -38,7 +38,7 @@ const navigate = useNavigate();
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
 
         {/* Logo */}
-       <a href=""> <img src="./Rituals.png" alt="logo" className="h-10" /></a>
+       <a className="cursor-pointer" onClick={()=>navigate("/")}> <img src="./Rituals.png" alt="logo" className="h-10" /></a>
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex items-center gap-12">
@@ -69,8 +69,8 @@ const navigate = useNavigate();
 
           {/* Icons */}
           <div className="flex items-center gap-4">
-            <FiUser className="cursor-pointer hover:text-purple-900" />
-            <FiHeart className="cursor-pointer hover:text-purple-900" />
+            <FiUser onClick={()=>navigate("/login")} className="cursor-pointer hover:text-purple-900" />
+            <FiHeart onClick={()=>navigate("/wishlist")} className="cursor-pointer hover:text-purple-900" />
             <FiShoppingCart className="cursor-pointer hover:text-purple-900" onClick={()=>navigate("/cart")} />
           </div>
         </div>
@@ -106,9 +106,9 @@ const navigate = useNavigate();
           </nav>
 
           <div className="flex gap-6 mt-5">
-            <FiUser />
-            <FiHeart />
-            <FiShoppingCart />
+            <FiUser onClick={()=>navigate("/login")} />
+            <FiHeart onClick={()=>navigate("/wishlist")} />
+            <FiShoppingCart onClick={()=>navigate("/cart")}/>
           </div>
         </div>
       )}
