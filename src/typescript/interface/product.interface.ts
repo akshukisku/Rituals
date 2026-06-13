@@ -5,6 +5,8 @@ export interface Product {
   price: string;
   mrp: string;
   images?: string | null;
+  category?: string | null;
+  isFeatured?: boolean;
 }
 
 export interface ProductState {
@@ -29,4 +31,17 @@ export interface ProductPayLoad {
   price: number;
   mrp: number;
   image?: File | string | null;
+  category?: string | null;
+  isFeatured?: boolean;
 }
+
+
+export type ProductFormValues = {
+  name: string;
+  description: string;
+  price: string;
+  mrp: string;
+  image: File | string | null;
+  category: string;
+  isFeatured: boolean;
+};

@@ -45,6 +45,8 @@ export const addProductFns = async (
       price: String(data.price),
       mrp: String(data.mrp),
       images: imageUrl,
+      category: data.category ?? null,
+      isFeatured: data.isFeatured ?? false,
     },
   });
 
@@ -82,6 +84,8 @@ export const editProductfns = async ({
     description: data.description,
     price: String(data.price),
     mrp: String(data.mrp),
+    category: data.category ?? null,
+    isFeatured: data.isFeatured ?? false,
   };
 
   if (imageUrl) {

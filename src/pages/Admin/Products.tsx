@@ -16,6 +16,13 @@ import {
   Stack,
   CircularProgress,
   Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControlLabel,
+  Checkbox,
+  Chip,
 } from "@mui/material";
 import { Trash2, Edit, X } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../../hooks/useredux";
@@ -31,27 +38,26 @@ import {
   setEditDialogClose,
   setImagePreview,
 } from "../../store/slices/product.slice";
+import { fetchCategoryList } from "../../store/slices/category.slice";
 import { ProductInputField } from "../../service/json/product.inputfield";
 import DynamicInput from "../../components/DynamicInput";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { productSchema } from "../../service/validation/product.validation";
-import type { ProductPayLoad } from "../../typescript/interface/product.interface";
+import type {
+  ProductFormValues,
+  ProductPayLoad,
+} from "../../typescript/interface/product.interface";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 
-type ProductFormValues = {
-  name: string;
-  description: string;
-  price: string;
-  mrp: string;
-  image?: File | string | null;
-};
+
 
 const Products = () => {
   const { dialog, imagePreview, products, isLoading } = useAppSelector(
-    (state) => state.product
+    (state) => state.product,
   );
+  const { categories } = useAppSelector((state) => state.category);
   const dispatch = useAppDispatch();
 
   const {
@@ -59,24 +65,33 @@ const Products = () => {
     reset,
     handleSubmit,
     setValue,
+    control,
     formState: { errors },
   } = useForm<ProductFormValues>({
     resolver: yupResolver(productSchema),
+    defaultValues: {
+      name: "",
+      description: "",
+      price: "",
+      mrp: "",
+      image: null,
+      category: "",
+      isFeatured: false,
+    },
   });
 
   const selectedProduct = dialog.isSelectedproducts;
   const isSubmitting = dialog.isDialogLoading || dialog.isAddProductLoading;
 
-  // Fix: prevent double-fetch (React StrictMode mounts twice in dev)
   const hasFetched = useRef(false);
 
   useEffect(() => {
     if (hasFetched.current) return;
     hasFetched.current = true;
     dispatch(fetchProductList());
+    dispatch(fetchCategoryList());
   }, [dispatch]);
 
-  // Populate form when editing a product
   useEffect(() => {
     if (selectedProduct) {
       reset({
@@ -85,50 +100,71 @@ const Products = () => {
         price: String(selectedProduct.price),
         mrp: String(selectedProduct.mrp),
         image: null,
+        category: selectedProduct.category ?? "",
+        isFeatured: selectedProduct.isFeatured ?? false,
       });
       dispatch(setImagePreview(selectedProduct.images));
     } else {
-      reset({ name: "", description: "", price: "", mrp: "", image: null });
+      reset({
+        name: "",
+        description: "",
+        price: "",
+        mrp: "",
+        image: null,
+        category: "",
+        isFeatured: false,
+      });
       dispatch(closeImagePreview());
     }
   }, [selectedProduct, reset, dispatch]);
 
-const onSubmit = async (data: ProductFormValues) => {
-  const payload: ProductPayLoad = {
-    name: data.name,
-    description: data.description,
-    price: Number(data.price),
-    mrp: Number(data.mrp),
-    image: data.image ?? null,
-  };
+  const onSubmit = async (data: ProductFormValues) => {
+    const payload: ProductPayLoad = {
+      name: data.name,
+      description: data.description,
+      price: Number(data.price),
+      mrp: Number(data.mrp),
+      image: (data.image as File | string | null) ?? null,
+      category: data.category || null,
+      isFeatured: data.isFeatured ?? false,
+    };
 
-  try {
-    if (selectedProduct?.$id) {
-      const editPayload: ProductPayLoad = {
-        ...payload,
-        image: data.image instanceof File ? data.image : selectedProduct.images,
-      };
+    try {
+      if (selectedProduct?.$id) {
+        const editPayload: ProductPayLoad = {
+          ...payload,
+          image:
+            data.image instanceof File ? data.image : selectedProduct.images,
+        };
 
-      await dispatch(
-        editProduct({ id: selectedProduct.$id, data: editPayload })
-      ).unwrap();
+        await dispatch(
+          editProduct({ id: selectedProduct.$id, data: editPayload }),
+        ).unwrap();
 
-      toast.success("Product updated successfully");
-    } else {
-      await dispatch(addProduct(payload)).unwrap();
-      toast.success("Product added successfully");
+        toast.success("Product updated successfully");
+      } else {
+        await dispatch(addProduct(payload)).unwrap();
+        toast.success("Product added successfully");
+      }
+
+      reset({
+        name: "",
+        description: "",
+        price: "",
+        mrp: "",
+        image: null,
+        category: "",
+        isFeatured: false,
+      });
+    } catch {
+      toast.error("Something went wrong");
     }
-
-    reset({ name: "", description: "", price: "", mrp: "", image: null });
-  } catch {
-    toast.error("Something went wrong");
-  }
-};
+  };
 
   const handleDelete = async (item: any) => {
     try {
       await dispatch(
-        deleteProduct({ id: item.$id, imageId: item.imageId })
+        deleteProduct({ id: item.$id, imageId: item.imageId }),
       ).unwrap();
       toast.success("Product deleted successfully");
     } catch {
@@ -137,15 +173,31 @@ const onSubmit = async (data: ProductFormValues) => {
   };
 
   const handleOpenAdd = () => {
-    dispatch(setEditDialogClose()); // clear any selected product first
-    reset({ name: "", description: "", price: "", mrp: "", image: null });
+    dispatch(setEditDialogClose());
+    reset({
+      name: "",
+      description: "",
+      price: "",
+      mrp: "",
+      image: null,
+      category: "",
+      isFeatured: false,
+    });
     dispatch(closeImagePreview());
     dispatch(setDialogOpen());
   };
 
   const handleCloseDialog = () => {
     dispatch(setDialogClose());
-    reset({ name: "", description: "", price: "", mrp: "", image: null });
+    reset({
+      name: "",
+      description: "",
+      price: "",
+      mrp: "",
+      image: null,
+      category: "",
+      isFeatured: false,
+    });
   };
 
   return (
@@ -169,7 +221,9 @@ const onSubmit = async (data: ProductFormValues) => {
 
       {/* Add / Edit Dialog */}
       <Dialog open={dialog.open} onClose={handleCloseDialog}>
-        <DialogTitle>{selectedProduct ? "Edit Product" : "Add Product"}</DialogTitle>
+        <DialogTitle>
+          {selectedProduct ? "Edit Product" : "Add Product"}
+        </DialogTitle>
 
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
           <DialogContent sx={{ width: "400px" }}>
@@ -185,6 +239,50 @@ const onSubmit = async (data: ProductFormValues) => {
                   errors={errors}
                 />
               ))}
+
+              {/* Category Select */}
+              <Controller
+                name="category"
+                control={control}
+                render={({ field }) => (
+                  <FormControl fullWidth>
+                    <InputLabel id="category-label">Category</InputLabel>
+                    <Select
+                      {...field}
+                      labelId="category-label"
+                      label="Category"
+                      value={field.value ?? ""}
+                      displayEmpty
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {categories.map((cat) => (
+                        <MenuItem key={cat.$id} value={cat.$id}>
+                          {cat.title}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                )}
+              />
+
+              {/* isFeatured Checkbox */}
+              <Controller
+                name="isFeatured"
+                control={control}
+                render={({ field }) => (
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={!!field.value}
+                        onChange={(e) => field.onChange(e.target.checked)}
+                      />
+                    }
+                    label="Mark as Featured"
+                  />
+                )}
+              />
             </Box>
 
             {/* Image upload */}
@@ -221,16 +319,16 @@ const onSubmit = async (data: ProductFormValues) => {
                   <img
                     src={imagePreview}
                     alt="preview"
-                    style={{ width: "150px", height: "150px", objectFit: "cover" }}
+                    style={{
+                      width: "150px",
+                      height: "150px",
+                      objectFit: "cover",
+                    }}
                   />
                 </Box>
               )}
 
-              <Button
-                variant="outlined"
-                component="label"
-                htmlFor="upload"
-              >
+              <Button variant="outlined" component="label" htmlFor="upload">
                 {imagePreview ? "Change Image" : "Upload Image"}
                 <input
                   id="upload"
@@ -243,7 +341,6 @@ const onSubmit = async (data: ProductFormValues) => {
                       setValue("image", file);
                       dispatch(setImagePreview(URL.createObjectURL(file)));
                     }
-                    // Reset input so the same file can be re-selected
                     e.target.value = "";
                   }}
                 />
@@ -252,7 +349,11 @@ const onSubmit = async (data: ProductFormValues) => {
           </DialogContent>
 
           <DialogActions>
-            <Button variant="outlined" onClick={handleCloseDialog} disabled={isSubmitting}>
+            <Button
+              variant="outlined"
+              onClick={handleCloseDialog}
+              disabled={isSubmitting}
+            >
               Cancel
             </Button>
 
@@ -278,6 +379,8 @@ const onSubmit = async (data: ProductFormValues) => {
               <TableCell>Product Name</TableCell>
               <TableCell>Price</TableCell>
               <TableCell>Market Price</TableCell>
+              <TableCell>Category</TableCell>
+              <TableCell>Featured</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -285,71 +388,108 @@ const onSubmit = async (data: ProductFormValues) => {
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={5} align="center">
+                <TableCell colSpan={7} align="center">
                   <CircularProgress />
                 </TableCell>
               </TableRow>
             ) : products.length > 0 ? (
-              products.map((item: any) => (
-                <TableRow key={item.$id}>
-                  <TableCell>
-                    {item.images ? (
-                      <img
-                        src={item.images}
-                        alt={item.name}
-                        width={60}
-                        style={{ borderRadius: "8px", objectFit: "cover", height: "60px" }}
-                      />
-                    ) : (
-                      <Box
-                        sx={{
-                          width: 60,
-                          height: 60,
-                          borderRadius: "8px",
-                          backgroundColor: "#f0f0f0",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontSize: "11px",
-                          color: "#999",
-                        }}
+              products.map((item: any) => {
+                const categoryName =
+                  categories.find((c) => c.$id === item.category)?.title ??
+                  null;
+
+                return (
+                  <TableRow key={item.$id}>
+                    <TableCell>
+                      {item.images ? (
+                        <img
+                          src={item.images}
+                          alt={item.name}
+                          width={60}
+                          style={{
+                            borderRadius: "8px",
+                            objectFit: "cover",
+                            height: "60px",
+                          }}
+                        />
+                      ) : (
+                        <Box
+                          sx={{
+                            width: 60,
+                            height: 60,
+                            borderRadius: "8px",
+                            backgroundColor: "#f0f0f0",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: "11px",
+                            color: "#999",
+                          }}
+                        >
+                          No image
+                        </Box>
+                      )}
+                    </TableCell>
+
+                    <TableCell>
+                      <Typography sx={{ fontWeight: "bold" }}>
+                        {item.name}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        {item.description}
+                      </Typography>
+                    </TableCell>
+
+                    <TableCell>₹{item.price}</TableCell>
+                    <TableCell>₹{item.mrp}</TableCell>
+
+                    <TableCell>
+                      {categoryName ? (
+                        <Chip
+                          label={categoryName}
+                          size="small"
+                          variant="outlined"
+                          color="primary"
+                        />
+                      ) : (
+                        <Typography variant="caption" color="text.disabled">
+                          —
+                        </Typography>
+                      )}
+                    </TableCell>
+
+                    <TableCell>
+                      {item.isFeatured ? (
+                        <Chip label="Featured" size="small" color="success" />
+                      ) : (
+                        <Typography variant="caption" color="text.disabled">
+                          —
+                        </Typography>
+                      )}
+                    </TableCell>
+
+                    <TableCell>
+                      <IconButton
+                        onClick={() => dispatch(setEditDialogOpen(item))}
+                        title="Edit product"
                       >
-                        No image
-                      </Box>
-                    )}
-                  </TableCell>
+                        <Edit size={18} />
+                      </IconButton>
 
-                  <TableCell>
-                    <Typography sx={{ fontWeight: "bold" }}>{item.name}</Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {item.description}
-                    </Typography>
-                  </TableCell>
-
-                  <TableCell>₹{item.price}</TableCell>
-                  <TableCell>₹{item.mrp}</TableCell>
-
-                  <TableCell>
-                    <IconButton
-                      onClick={() => dispatch(setEditDialogOpen(item))}
-                      title="Edit product"
-                    >
-                      <Edit size={18} />
-                    </IconButton>
-
-                    <IconButton
-                      color="error"
-                      onClick={() => handleDelete(item)}
-                      title="Delete product"
-                    >
-                      <Trash2 size={18} />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))
+                      <IconButton
+                        color="error"
+                        onClick={() => handleDelete(item)}
+                        title="Delete product"
+                      >
+                        <Trash2 size={18} />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
             ) : (
               <TableRow>
-                <TableCell colSpan={5} align="center">
+                <TableCell colSpan={7} align="center">
                   <Typography color="text.secondary" sx={{ py: 4 }}>
                     No products added yet
                   </Typography>
