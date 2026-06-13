@@ -3,11 +3,21 @@ import type {
   Product,
   ProductPayLoad,
 } from "../../typescript/interface/product.interface";
+import { Query } from "appwrite";
 
-export const fetchProductListfns = async () => {
+export const fetchProductListfns = async (
+  page: number = 1,
+  limit: number = 10
+) => {
+  const offset = (page - 1) * limit;
+
   const response = await tablesDB.listRows({
     databaseId: import.meta.env.VITE_APPWRITE_DATABASE_ID,
     tableId: "products",
+    queries: [
+      Query.limit(limit),
+      Query.offset(offset),
+    ],
   });
 
   return response;

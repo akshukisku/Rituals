@@ -1,21 +1,33 @@
 import React from "react";
 
-const CategorySidebar = () => {
+interface CategorySidebarProps {
+  onFilter: (filters: {
+    maxPrice: number;
+    productTypes: string[];
+    quantity: string[];
+    availability: string;
+  }) => void;
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
 
-    const formData = new FormData(e.currentTarget as HTMLFormElement);
 
-    const data = {
-      price: formData.get("price"),
-      productTypes: formData.getAll("productTypes"),
-      quantity: formData.getAll("quantity"),
-      availability: formData.get("availability"),
-    };
+const CategorySidebar = ({ onFilter }: CategorySidebarProps) => {
 
-    console.log(data);
+  
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.currentTarget);
+
+  const data = {
+    maxPrice: Number(formData.get("price") || 0),
+    productTypes: formData.getAll("productTypes") as string[],
+    quantity: formData.getAll("quantity") as string[],
+    availability: (formData.get("availability") as string) || "",
   };
+
+  onFilter(data);
+};
 
   return (
     <form

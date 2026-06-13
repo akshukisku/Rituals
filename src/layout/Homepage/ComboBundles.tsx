@@ -1,23 +1,44 @@
-import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import type { Swiper as SwiperType } from "swiper";
-
 import "swiper/css";
-
-import { comboCards } from "../../service/json/rituals.data";
+import { useEffect, useRef, useState } from "react";
+import { getFeaturedProducts } from "../../service/helper/global.helper";
+import type { Product } from "../../typescript/interface/product.interface";
 import ComboCard from "../../components/ComboCard";
 
 const ComboBundles = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const swiperRef = useRef<SwiperType | null>(null);
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const data = await getFeaturedProducts(10);
+
+        setProducts(data as unknown as Product[]);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
+
+  if (loading) {
+    return <div className="text-center py-10">Loading Combo Bundles...</div>;
+  }
 
   return (
     <section className="py-10 sm:py-14 lg:py-16 px-4 sm:px-6 lg:px-8 relative">
       <div className="container mx-auto relative">
-
         {/* Heading */}
-        <h2 className="text-[#5a0a2a] font-semibold mb-6 sm:mb-8 
-        text-lg sm:text-xl md:text-2xl">
+        <h2
+          className="text-[#5a0a2a] font-semibold mb-6 sm:mb-8 
+        text-lg sm:text-xl md:text-2xl"
+        >
           Combo Bundles
         </h2>
 
@@ -51,23 +72,38 @@ const ComboBundles = () => {
             onSwiper={(swiper) => (swiperRef.current = swiper)}
             grabCursor={true}
             breakpoints={{
-              0:    { slidesPerView: 1.2, spaceBetween: 12 },
-              480:  { slidesPerView: 1.5 },
-              640:  { slidesPerView: 2, spaceBetween: 16 },
-              768:  { slidesPerView: 2.5 },
+              0: { slidesPerView: 1.2, spaceBetween: 12 },
+              480: { slidesPerView: 1.5 },
+              640: { slidesPerView: 2, spaceBetween: 16 },
+              768: { slidesPerView: 2.5 },
               1024: { slidesPerView: 3.5, spaceBetween: 20 },
               1280: { slidesPerView: 4.5 },
               1536: { slidesPerView: 5 },
             }}
           >
-            {comboCards.map((data) => (
-              <SwiperSlide key={data.id} className="h-auto">
-                <ComboCard data={data} />
+            {products.map((product) => (
+              <SwiperSlide key={product.$id} className="h-auto">
+                <ComboCard
+                  data={{
+                    id: product.$id ?? "",
+
+                    name: product.name,
+
+                    image: product.images,
+
+                    price: Number(product.price),
+
+                    oldPrice: Number(product.mrp),
+
+                    reviews: 0,
+
+                    rating: 5,
+                  }}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
-
       </div>
     </section>
   );

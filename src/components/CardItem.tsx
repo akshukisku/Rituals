@@ -1,9 +1,10 @@
 import { FiTrash2 } from "react-icons/fi";
 import { useAppDispatch } from "../hooks/useredux";
-import { decrease, increase, removeItem } from "../store/slices/cart.slice";
+import { decrease, increase, removeCartItem, updateCartQuantity } from "../store/slices/cart.slice";
+// import { useAppSelector } from "../hooks/useredux";
 
 interface CartItemProps {
-  id: string | number;
+  id: string;
   image: string;
   name: string;
   price: number;
@@ -13,7 +14,16 @@ interface CartItemProps {
 const CartItem = ({ id, image, name, price, quantity }: CartItemProps) => {
   const dispatch = useAppDispatch();
 
+  const handleDecrease = () => {
+    if (quantity <= 1) return; // prevent going below 1
+    dispatch(decrease(id));                              // update UI instantly
+    dispatch(updateCartQuantity({ cartId: id, quantity: quantity - 1 })); // persist to Appwrite
+  };
 
+  const handleIncrease = () => {
+    dispatch(increase(id));                              // update UI instantly
+    dispatch(updateCartQuantity({ cartId: id, quantity: quantity + 1 })); // persist to Appwrite
+  };
 
   return (
     <div className="flex flex-col md:flex-row items-start md:items-center gap-4 bg-[#efe6d5] rounded-xl p-4">
@@ -33,12 +43,26 @@ const CartItem = ({ id, image, name, price, quantity }: CartItemProps) => {
       </div>
 
       <div className="flex items-center border rounded-lg overflow-hidden">
-        <button className="px-3 py-1 bg-[#5a0a2a] text-white" onClick={()=>dispatch(decrease(id))}>-</button>
+        <button
+          className="px-3 py-1 bg-[#5a0a2a] text-white disabled:opacity-40"
+          onClick={handleDecrease}
+          disabled={quantity <= 1}   // disable at 1 instead of allowing 0
+        >
+          -
+        </button>
         <span className="px-4">{quantity}</span>
-        <button className="px-3 py-1 bg-[#5a0a2a] text-white" onClick={()=>dispatch(increase(id))}>+</button>
+        <button
+          className="px-3 py-1 bg-[#5a0a2a] text-white"
+          onClick={handleIncrease}
+        >
+          +
+        </button>
       </div>
 
-      <button className="text-[#5a0a2a]" onClick={()=>dispatch(removeItem(id))}>
+      <button
+        className="text-[#5a0a2a]"
+        onClick={() => dispatch(removeCartItem(id))}
+      >
         <FiTrash2 />
       </button>
     </div>

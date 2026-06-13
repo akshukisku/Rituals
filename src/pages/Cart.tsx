@@ -2,15 +2,13 @@
 
 import Banner from "../components/Banner"
 import CardLayout from "../layout/CardLayout"
-import YouMayLike from "../layout/YouMayLike"
+// import YouMayLike from "../layout/YouMayLike"
 import Stores from "../components/Stores"
-
 
 const Cart = () => {
   return (
     <div className="w-full">
     <CardLayout/>
-    <YouMayLike/>
     <Banner />
     <Stores/>
     </div>

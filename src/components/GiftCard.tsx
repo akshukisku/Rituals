@@ -4,22 +4,39 @@ import type { GiftCardProps } from "../typescript/interface/rituals.interface";
 import { FiHeart } from "react-icons/fi";
 import { FaStar } from "react-icons/fa";
 import { useAppDispatch } from "../hooks/useredux";
-import { addItem } from "../store/slices/cart.slice";
+import {  addToCart } from "../store/slices/cart.slice";
 import { addWish } from "../store/slices/wishlist.slice";
 import { toast } from "sonner";
+import { account } from "../lib/appwrite.config";
 
 const GiftCard = (g: GiftCardProps) => {
   // console.log(g);
 
   const dispatch = useAppDispatch();
 
-  const AddCart=()=>{
-    dispatch(addItem(g.gift))
-  }
+const AddCart = async () => {
+  try {
+    const user = await account.get();
 
+
+    await dispatch(
+      addToCart({
+        userId: user.$id,
+        product: g.gift,
+      })
+    ).unwrap();
+
+    toast.success(`${g.gift.name} added to cart 🛒`);  // ✅ moved inside try
+  } catch (error: any) {
+    console.error("Add to cart error:", error);
+    toast.error(error?.message || "Failed to add to cart");
+  }
+};
   const addWishItem =()=>{
-    dispatch(addWish(g.gift))
-    
+ console.log("Gift",g.gift);
+
+  dispatch(addWish(g.gift));
+
   toast.success(`${g.gift.name} added to wishlist ❤️`);
   }
   return (

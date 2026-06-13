@@ -23,7 +23,7 @@ export interface TeamMember {
   socials: SocialLinks;
 }
 export interface Gifts {
-  id: number;
+  id: string;
   name: string;
   image: string;
   price: number;
@@ -33,7 +33,7 @@ export interface Gifts {
   discount: number;
 }
 export interface ProductCard {
-  id:number;
+  id:string;
   name: string;
   image: string;
   price: number;
@@ -51,7 +51,7 @@ export interface ReturnCard {
   rating: number;
 }
 export interface ComboCard {
-  id: number;
+  id: string;
   name: string;
   image: string;
   price: number;

@@ -1,17 +1,21 @@
 export interface Product {
-  $id?: string ;
+  $id?: string;
   name: string;
   description: string;
-  price: string;
-  mrp: string;
-  images?: string | null;
-  category?: string | null;
-  isFeatured?: boolean;
+  price: number;
+  mrp: number;
+  isFeatured: boolean;
+  images: string;
+  category: string | null;
+  imageId?: string;
+  $createdAt?: string;
 }
-
 export interface ProductState {
   isLoading: boolean;
   isError: string | null;
+  total: number;
+  page: number;
+  limit: number;
 
   products: Product[];
 
@@ -34,7 +38,6 @@ export interface ProductPayLoad {
   category?: string | null;
   isFeatured?: boolean;
 }
-
 
 export type ProductFormValues = {
   name: string;

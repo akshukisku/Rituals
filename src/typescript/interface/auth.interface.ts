@@ -17,6 +17,7 @@ export interface SignupPayload extends LoginPayload {
 
 export interface User extends SignupPayload {
   $id: string;
+  phone:string | number
 }
 
 export interface AuthState {

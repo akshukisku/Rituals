@@ -16,6 +16,9 @@ const initialState: ProductState = {
   isLoading: false,
   isError: null,
   products: [],
+  total: 0,
+  page: 1,
+  limit: 10,
   imagePreview: null,
   dialog: {
     open: false,
@@ -26,17 +29,17 @@ const initialState: ProductState = {
 };
 
 export const fetchProductList = createAsyncThunk(
-  "/admin/listProd",
-  async (_, { rejectWithValue }) => {
+  "product/fetchProductList",
+  async (
+    { page, limit }: { page: number; limit: number },
+    { rejectWithValue },
+  ) => {
     try {
-      const res = await fetchProductListfns();
-      return res.rows;
-    } catch {
-      const message = "Failed to Fetch Product List";
-      toast.error(message);
-      return rejectWithValue(message);
+      return await fetchProductListfns(page, limit);
+    } catch (error: any) {
+      return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 export const addProduct = createAsyncThunk(
@@ -51,7 +54,7 @@ export const addProduct = createAsyncThunk(
       toast.error(message);
       return rejectWithValue(message);
     }
-  }
+  },
 );
 
 export const editProduct = createAsyncThunk<
@@ -143,8 +146,8 @@ const productSlice = createSlice({
       })
       .addCase(fetchProductList.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isError = null;
-        state.products = action.payload as unknown as Product[];
+        state.products = action.payload.rows as unknown as Product[];
+        state.total = action.payload.total;
       })
       .addCase(fetchProductList.rejected, (state, action) => {
         state.isLoading = false;
@@ -169,7 +172,7 @@ const productSlice = createSlice({
         state.products = state.products.map((item) =>
           item.$id === action.payload.$id
             ? (action.payload as unknown as Product)
-            : item
+            : item,
         );
       })
       .addCase(editProduct.rejected, (state, action) => {
@@ -187,7 +190,7 @@ const productSlice = createSlice({
         state.isLoading = false;
         state.isError = null;
         state.products = state.products.filter(
-          (item) => item.$id !== action.payload
+          (item) => item.$id !== action.payload,
         );
       })
       .addCase(deleteProduct.rejected, (state, action) => {

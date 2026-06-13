@@ -1,5 +1,5 @@
 type ProductItem = {
-  id:  number;
+  $id: string;
   quantity: number;
   name: string;
   price: number;

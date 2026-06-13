@@ -3,6 +3,11 @@ import { createBrowserRouter } from "react-router-dom";
 import Loaders from "../components/Loaders";
 import AdminProtected from "../components/AdminProtected";
 import Wishlist from "../pages/Wishlist";
+import ProfilePage from "../layout/Profile";
+import PaymentSuccess from "../components/PaymentSuccess";
+const Blog = lazy(()=>import("../pages/Blog"))  ;
+
+const Contact = lazy(()=>import( "../pages/Admin/Contact"))
 
 const Cart = lazy(() => import("../pages/Cart"));
 const HomeWrapper = lazy(() => import("../layout/HomeWrapper"));
@@ -36,6 +41,10 @@ const Router = createBrowserRouter([
         ),
       },
       {
+        path: "/payment-success",
+        element: <PaymentSuccess />,
+      },
+      {
         path: "aboutus",
         element: (
           <Suspense fallback={<Loaders />}>
@@ -50,6 +59,24 @@ const Router = createBrowserRouter([
             <Shop />
           </Suspense>
         ),
+      },{
+        path:"blog",
+        element:(
+          <Suspense fallback={<Loaders />}>
+            <Blog/>
+          </Suspense>
+        ),
+      }
+      ,
+      {
+        path:"contact",
+        element:
+        (
+          <Suspense fallback={<Loaders/>}>
+            <Contact/>
+          </Suspense>
+        )
+
       },
 
       // Cart removed from UserProtected
@@ -79,12 +106,20 @@ const Router = createBrowserRouter([
         ),
       },
       {
-        path:"wishlist",
-        element:(
-          <Suspense fallback={<Loaders/>}>
-            <Wishlist/>
+        path: "wishlist",
+        element: (
+          <Suspense fallback={<Loaders />}>
+            <Wishlist />
           </Suspense>
-        )
+        ),
+      },
+      {
+        path: "profile",
+        element: (
+          <Suspense fallback={<Loaders />}>
+            <ProfilePage />
+          </Suspense>
+        ),
       },
       {
         path: "*",

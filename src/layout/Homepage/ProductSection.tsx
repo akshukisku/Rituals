@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import type { Swiper as SwiperType } from "swiper";
@@ -6,66 +6,90 @@ import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 
 import ProductCard from "../../components/ProductCard";
-import { weddingCards } from "../../service/json/rituals.data";
+import { getProductsPublic } from "../../service/helper/global.helper";
 
 const ProductSection = () => {
   const swiperRef = useRef<SwiperType | null>(null);
 
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const response = await getProductsPublic(1, 20);
+
+        setProducts(response.products);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-10">
+        <div className="container mx-auto">
+          <h2 className="text-[#5a0a2a] font-semibold text-2xl">
+            Popular Wedding Cards
+          </h2>
+          <p className="mt-4">Loading...</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-10 sm:py-14 lg:py-16 px-4 sm:px-6 lg:px-8 relative">
       <div className="container mx-auto relative">
-
-        {/* Heading */}
-        <h2 className="text-[#5a0a2a] font-semibold mb-6 sm:mb-8 
-        text-lg sm:text-xl md:text-2xl">
+        <h2
+          className="text-[#5a0a2a] font-semibold mb-6 sm:mb-8
+          text-lg sm:text-xl md:text-2xl"
+        >
           Popular Wedding Cards
         </h2>
 
-        {/* LEFT ARROW */}
         <button
           onClick={() => swiperRef.current?.slidePrev()}
-          className="absolute left-1 sm:left-2 md:-left-4 top-1/2 -translate-y-1/2 z-20 
-          bg-white/90 backdrop-blur shadow-md 
-          w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 
-          flex items-center justify-center rounded-full"
+          className="absolute left-1 sm:left-2 md:-left-4 top-1/2 -translate-y-1/2 z-20
+          bg-white shadow-md w-10 h-10 flex items-center justify-center rounded-full"
         >
-          <FiChevronLeft className="text-base sm:text-lg lg:text-xl" />
+          <FiChevronLeft />
         </button>
 
-        {/* RIGHT ARROW */}
         <button
           onClick={() => swiperRef.current?.slideNext()}
-          className="absolute right-1 sm:right-2 md:-right-4 top-1/2 -translate-y-1/2 z-20 
-          bg-white/90 backdrop-blur shadow-md 
-          w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 
-          flex items-center justify-center rounded-full"
+          className="absolute right-1 sm:right-2 md:-right-4 top-1/2 -translate-y-1/2 z-20
+          bg-white shadow-md w-10 h-10 flex items-center justify-center rounded-full"
         >
-          <FiChevronRight className="text-base sm:text-lg lg:text-xl" />
+          <FiChevronRight />
         </button>
 
-        {/* Swiper */}
-        <div className="w-full overflow-hidden">
-          <Swiper
-            onSwiper={(swiper) => { swiperRef.current = swiper; }}
-            grabCursor={true}
-            breakpoints={{
-              0:    { slidesPerView: 1.2, spaceBetween: 12 },
-              480:  { slidesPerView: 1.5 },
-              640:  { slidesPerView: 2, spaceBetween: 16 },
-              768:  { slidesPerView: 2.5 },
-              1024: { slidesPerView: 3.5, spaceBetween: 20 },
-              1280: { slidesPerView: 4.5 },
-              1536: { slidesPerView: 5 },
-            }}
-          >
-            {weddingCards.map((card,index) => (
-              <SwiperSlide key={index} className="h-auto">
-                <ProductCard data={card} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-
+        <Swiper
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
+          }}
+          grabCursor
+          breakpoints={{
+            0: { slidesPerView: 1.2, spaceBetween: 12 },
+            480: { slidesPerView: 1.5, spaceBetween: 12 },
+            640: { slidesPerView: 2, spaceBetween: 16 },
+            768: { slidesPerView: 2.5, spaceBetween: 16 },
+            1024: { slidesPerView: 3.5, spaceBetween: 20 },
+            1280: { slidesPerView: 4.5, spaceBetween: 20 },
+            1536: { slidesPerView: 5, spaceBetween: 20 },
+          }}
+        >
+          {products.map((product) => (
+            <SwiperSlide key={product.$id}>
+              <ProductCard data={product} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </section>
   );

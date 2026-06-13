@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useAppSelector } from "../hooks/useredux";
+import { checkout } from "../service/payment";
 
 const DELIVERY_FEE = 20;
 const DISCOUNT_RATE = 0.1;
@@ -10,12 +11,12 @@ const CartSummary = () => {
   const { totalProducts, subTotal, discount, finalPrice } = useMemo(() => {
     const totalProducts = cartItems.reduce(
       (acc, item) => acc + item.quantity,
-      0
+      0,
     );
 
     const subTotal = cartItems.reduce(
       (acc, item) => acc + item.price * item.quantity,
-      0
+      0,
     );
 
     const discount = subTotal * DISCOUNT_RATE;
@@ -30,12 +31,15 @@ const CartSummary = () => {
     };
   }, [cartItems]);
 
+  const handleCheckout = async () => {
+    console.log("ok")
+    await checkout(cartItems);
+  };
+
   return (
     <div className="bg-[#efe6d5] rounded-xl p-6 flex flex-col gap-4">
       {/* Coupon */}
-      <h3 className="font-semibold text-[#5a0a2a]">
-        Coupon
-      </h3>
+      <h3 className="font-semibold text-[#5a0a2a]">Coupon</h3>
 
       <div className="flex gap-2">
         <input
@@ -49,9 +53,7 @@ const CartSummary = () => {
       </div>
 
       {/* Checkout */}
-      <h3 className="font-semibold text-[#5a0a2a] mt-4">
-        Checkout
-      </h3>
+      <h3 className="font-semibold text-[#5a0a2a] mt-4">Checkout</h3>
 
       <div className="text-sm flex justify-between">
         <span>Total Products ({totalProducts})</span>
@@ -77,7 +79,10 @@ const CartSummary = () => {
         </div>
       </div>
 
-      <button className="bg-[#5a0a2a] text-white py-2 rounded-full mt-3 hover:opacity-90 transition">
+      <button
+        onClick={handleCheckout}
+        className="bg-[#5a0a2a] text-white py-2 rounded-full"
+      >
         Proceed to Checkout
       </button>
     </div>

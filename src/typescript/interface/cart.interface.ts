@@ -1,12 +1,21 @@
-type CartItem = {
-  id:  number;
+export interface CartItem {
+  $id: string;
+  productId: string;
+  userId: string;
   quantity: number;
+
+  image: string;
   name: string;
   price: number;
-  image: string;
-};
-
-export type CartState = {
+}
+export interface CartState {
   cartItem: CartItem[];
-  quantity:number
-};
+  loading: boolean;
+  error: string | null;
+}
+export interface CartProduct {
+  $id?: string;
+  name: string;
+  price: number;
+  images?: string;
+}

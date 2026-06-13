@@ -48,13 +48,14 @@ import type {
   ProductFormValues,
   ProductPayLoad,
 } from "../../typescript/interface/product.interface";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-
-
+import Pagination from "@mui/material/Pagination";
 
 const Products = () => {
-  const { dialog, imagePreview, products, isLoading } = useAppSelector(
+  const [page, setPage] = useState(1);
+  const limit = 10;
+  const { dialog, imagePreview, products, isLoading, total } = useAppSelector(
     (state) => state.product,
   );
   const { categories } = useAppSelector((state) => state.category);
@@ -83,12 +84,16 @@ const Products = () => {
   const selectedProduct = dialog.isSelectedproducts;
   const isSubmitting = dialog.isDialogLoading || dialog.isAddProductLoading;
 
-  const hasFetched = useRef(false);
+  useEffect(() => {
+    dispatch(
+      fetchProductList({
+        page,
+        limit,
+      }),
+    );
+  }, [dispatch, page]);
 
   useEffect(() => {
-    if (hasFetched.current) return;
-    hasFetched.current = true;
-    dispatch(fetchProductList());
     dispatch(fetchCategoryList());
   }, [dispatch]);
 
@@ -138,14 +143,26 @@ const Products = () => {
         };
 
         await dispatch(
-          editProduct({ id: selectedProduct.$id, data: editPayload }),
+          editProduct({
+            id: selectedProduct.$id,
+            data: editPayload,
+          }),
         ).unwrap();
 
         toast.success("Product updated successfully");
       } else {
         await dispatch(addProduct(payload)).unwrap();
+
         toast.success("Product added successfully");
       }
+
+      // Refresh current page
+      await dispatch(
+        fetchProductList({
+          page,
+          limit,
+        }),
+      );
 
       reset({
         name: "",
@@ -156,6 +173,8 @@ const Products = () => {
         category: "",
         isFeatured: false,
       });
+
+      dispatch(closeImagePreview());
     } catch {
       toast.error("Something went wrong");
     }
@@ -164,8 +183,24 @@ const Products = () => {
   const handleDelete = async (item: any) => {
     try {
       await dispatch(
-        deleteProduct({ id: item.$id, imageId: item.imageId }),
+        deleteProduct({
+          id: item.$id,
+          imageId: item.imageId,
+        }),
       ).unwrap();
+
+      if (products.length === 1 && page > 1) {
+        setPage((prev) => prev - 1);
+        return;
+      }
+
+      await dispatch(
+        fetchProductList({
+          page,
+          limit,
+        }),
+      );
+
       toast.success("Product deleted successfully");
     } catch {
       toast.error("Failed to delete product");
@@ -499,6 +534,23 @@ const Products = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      <Box
+        sx={{
+          mt: 3,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="body2">Total Products: {total}</Typography>
+
+        <Pagination
+          page={page}
+          count={Math.ceil(total / limit)}
+          color="primary"
+          onChange={(_, value) => setPage(value)}
+        />
+      </Box>
     </Box>
   );
 };
